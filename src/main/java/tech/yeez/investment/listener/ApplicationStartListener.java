@@ -50,12 +50,12 @@ public class ApplicationStartListener implements CommandLineRunner {
     public void run(String... args) throws Exception {
         try {
             List<Subscribe> subscribeList = subscribeService.selectAll();
-//            for (Subscribe subscribe : subscribeList) {
-//                TradeTypeEnum tradeTypeEnum = TradeTypeEnum.queryByType(subscribe.getTradeType());
-//                if (tradeTypeEnum == null) { 
-//                    log.error("[CommandLineRunner]tradeTypeEnum is null subId:{}", subscribe.getId());
-//                    continue;
-//                }
+            for (Subscribe subscribe : subscribeList) {
+                TradeTypeEnum tradeTypeEnum = TradeTypeEnum.queryByType(subscribe.getTradeType());
+                if (tradeTypeEnum == null) { 
+                    log.error("[CommandLineRunner]tradeTypeEnum is null subId:{}", subscribe.getId());
+                    continue;
+                }
 //                if (tradeTypeEnum.getLocal()) {
 //                    //local save value
 //                    String value = AssetConstant.ethCall(subscriptionService, AssetConstant.net_work, subscribe.getContractAddress(), subscribe.getTopics());
@@ -98,7 +98,7 @@ public class ApplicationStartListener implements CommandLineRunner {
 //                    subscribeService.updateById(subscribe);
 //
 //                }
-//            }
+            }
             //init supply
 //            String timestamp = DateUtil.getThisDayBeginTime(LocalDate.now());
 //            Supply supply = supplyService.getSupplyByTime(timestamp);
