@@ -52,38 +52,38 @@ import java.util.stream.Collectors;
 @RestController
 public class SubscriptionController {
 
-    @PostMapping("/event/query/transaction/firstlog")
-    Result<String> ethGetTransactionFirstLog(@RequestParam(required = false) String netWork, @RequestParam(required = false) String transactionHash) {
-		return null;
-	}
-
-    @PostMapping("/event/query/transaction")
-    Result<String> ethGetTransactionReceipt(@RequestParam(required = false) String netWork, @RequestParam(required = false) String transactionHash) {
-		return null;
-	}
-
-    @PostMapping(value = "/event/subscribe")
-    Result<String> subscripe(@RequestBody(required = false) SubscribeRequestDto subscribe) {		// get filter id of subscribe
-    	Result result = new Result();
-    	result.setData(1);
-		return result;
-	}
-
-    @PostMapping(value = "/event/subscribe/status")
-    Result<String> subscripeStatus(@RequestParam(required = false) String subId) {  // get status by filter id of subscribe
-    	Result result = new Result();
-    	result.setData(-1);
-		return result;
-	}
-
-    @PostMapping(value = "/event/call")
-    Result<String> infuraCall(@RequestBody(required = false) InfuraCallRequestDto infuraCallRequestDto) {
-		return null;
-	}
-
-    @PostMapping(value = "/event/subscribe/heigh")
-    Result<String> subscripeHeight(@RequestParam(required = false) String subId) {
-		return null;
-	}
+//    @PostMapping("/event/query/transaction/firstlog")
+//    Result<String> ethGetTransactionFirstLog(@RequestParam(required = false) String netWork, @RequestParam(required = false) String transactionHash) {
+//		return null;
+//	}
+//
+//    @PostMapping("/event/query/transaction")
+//    Result<String> ethGetTransactionReceipt(@RequestParam(required = false) String netWork, @RequestParam(required = false) String transactionHash) {
+//		return null;
+//	}
+//
+//    @PostMapping(value = "/event/subscribe")
+//    Result<String> subscripe(@RequestBody(required = false) SubscribeRequestDto subscribe) {		// get filter id of subscribe
+//    	Result result = new Result();
+//    	result.setData(1);
+//		return result;
+//	}
+//
+//    @PostMapping(value = "/event/subscribe/status")
+//    Result<String> subscripeStatus(@RequestParam(required = false) String subId) {  // get status by filter id of subscribe
+//    	Result result = new Result();
+//    	result.setData(-1);
+//		return result;
+//	}
+//
+//    @PostMapping(value = "/event/call")
+//    Result<String> infuraCall(@RequestBody(required = false) InfuraCallRequestDto infuraCallRequestDto) {
+//		return null;
+//	}
+//
+//    @PostMapping(value = "/event/subscribe/heigh")
+//    Result<String> subscripeHeight(@RequestParam(required = false) String subId) {
+//		return null;
+//	}
 
    }

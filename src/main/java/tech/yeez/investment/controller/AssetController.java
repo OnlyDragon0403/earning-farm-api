@@ -58,125 +58,125 @@ public class AssetController {
         return result;
     }
     
-    @PostMapping(path= {"/{code}/getAsset", "/getAsset"})
-    public Result<AssetVo> getAsset(@PathVariable(required=false,name="code") String code ,@RequestParam(required = false) String address, @RequestParam(required = false) Boolean firstpage){
-        Result<AssetVo> result = new Result<>(); 
-        AssetVo assetVo = new AssetVo(); 
-        
-        if(code.toUpperCase().equals("USDC")) {
-	        assetVo.setCode(code);
-	        assetVo.setRatio("0.1");
-	        assetVo.setLp_token("0");
-	        assetVo.setRatio("0.001");
-	        assetVo.setRisk_tpye(0);
-	        assetVo.setSevendayProfit("0.0654");
-	        assetVo.setTotalassets("15595374.064381951250954429334747535591555415");
-	        assetVo.setUser_assets("0");
-	        assetVo.setUser_assets_origin("0");
-	        assetVo.setUser_profit("0");
-        }
-        
-        if(code.toUpperCase().equals("WBTC")) {
-	        assetVo.setCode(code);
-	        assetVo.setRatio("0.1");
-	        assetVo.setLp_token("0");
-	        assetVo.setRatio("0.001");
-	        assetVo.setRisk_tpye(0);
-	        assetVo.setSevendayProfit("0.0071");
-	        assetVo.setTotalassets("15.61390013391415938485668058316149142");
-	        assetVo.setUser_assets("0");
-	        assetVo.setUser_assets_origin("0");
-	        assetVo.setUser_profit("0");
-        }
-        
-        if(code.toUpperCase().equals("ETH")) {
-	        assetVo.setCode(code);
-	        assetVo.setRatio("0.1");
-	        assetVo.setLp_token("0");
-	        assetVo.setRatio("0.001");
-	        assetVo.setRisk_tpye(0);
-	        assetVo.setSevendayProfit("0.0497");
-	        assetVo.setTotalassets("1999.09204979923497559962274899599794195");
-	        assetVo.setUser_assets("0");
-	        assetVo.setUser_assets_origin("0");
-	        assetVo.setUser_profit("0");
-        }
-        
-        result.setData(assetVo);
-        return result;
-    }
-
-    @PostMapping(value = "/profit")
-    public Result<ProfitVo> getProfit(@RequestParam(required = false) String address){
-        Result<ProfitVo> result = new Result<>();
-
-        List<ProfitVo> profitVos;
-        String endTime = DateUtil.getThisDayBeginTime(LocalDate.now());
-        Supply supply = supplyService.getSupplyByTime(endTime);
-        List<Supply> supplies = supplyService.getCurrentThirdty();
-
-        profitVos = supplies.stream().sorted(Comparator.comparing(Supply::getDateTime))
-                .map(v-> new ProfitVo(new BigDecimal(v.getDateTime()).divide(new BigDecimal("1000"), 0, RoundingMode.HALF_DOWN).stripTrailingZeros().toPlainString(), caculaApy(Instant.ofEpochMilli(Long.parseLong(v.getDateTime())).atZone(ZoneOffset.UTC).toLocalDate(), supply.getAverageDays()))).collect(Collectors.toList());
-        result.setDataList(profitVos);
-        return result;
-    }
-
-
-    @PostMapping(value = "/transaction")
-    public Result<TransactionVo> transaction(@RequestParam(required = false) String address,@RequestParam(required = false) Long pageNo, @RequestParam(required = false) Long pageSize){			// pageNo, pageSize, orderBy , order
-        log.info("[transaction] address:{} pageNo:{} pageSize:{}", address, pageNo, pageSize);
-        Result<TransactionVo> result = new Result<>();
-        tech.yeez.investment.model.dto.common.Page page = new tech.yeez.investment.model.dto.common.Page();
-        pageNo = pageNo == null ? 1 : pageNo;
-        pageSize = pageSize == null ? 10 : pageSize;
-        if(StringUtils.isBlank(address)){
-            result.setDataList(new ArrayList<>());
-            page.setPageNo(pageNo);
-            page.setPageSize(pageSize);
-            page.setCount(0);
-            result.setPage(page);
-            return result;
-        }
-
-        Page<TransactionRecord> iPage = new Page<>(pageNo, pageSize);
-        Page<TransactionRecord> transactionRecordPage = transactionRecordService.findTranForPage(iPage, CommonUtil.removeHexPrefixIfExists(address));
-
-        List<TransactionVo> transactionVos = transactionRecordPage.getRecords().stream().map(TransactionVo::transfer).collect(Collectors.toList());
-        result.setDataList(transactionVos);
-
-
-        page.setPageNo(pageNo);
-        page.setPageSize(pageSize);
-        page.setCount(transactionRecordPage.getTotal());
-        result.setPage(page);
-
-        return result;
-    }
-
-
-    /**
-     *
-     * cal  days  avarge apy
-     * @param startDate startDate
-     */
-    private static String caculaApy(LocalDate startDate, Integer days){
-//        LocalDate endDate = startDate.minusDays(days);
-        ISupplyService supplyService = SpringBeanUtil.getBean(ISupplyService.class);
-        if(supplyService == null){
-            log.error("[caculaApy] supplyService is null!");
-            return "0";
-        }
-//        List<Supply> supplyList = supplyService.getSupplyBetweenTime(DateUtil.getThisDayBeginTime(endDate), DateUtil.getThisDayBeginTime(startDate));
-        List<Supply> supplyList = supplyService.getSupplyLastCount(DateUtil.getThisDayBeginTime(startDate), days);
-        supplyList = supplyList.stream().filter(v->StringUtils.isNotBlank(v.getApy())).collect(Collectors.toList());
-        if(supplyList.size() == 0){
-            return "0";
-        }
-        days = days > supplyList.size() ? supplyList.size() : days;
-        BigDecimal totalApy = supplyList.stream().map(Supply::getApy).map(BigDecimal::new).reduce(BigDecimal::add).orElse(BigDecimal.ZERO);
-        return totalApy.divide(new BigDecimal(days), 18, RoundingMode.HALF_DOWN).multiply(new BigDecimal("365")).setScale(4, RoundingMode.HALF_DOWN).stripTrailingZeros().toPlainString();
-
-    }
+//    @PostMapping(path= {"/{code}/getAsset", "/getAsset"})
+//    public Result<AssetVo> getAsset(@PathVariable(required=false,name="code") String code ,@RequestParam(required = false) String address, @RequestParam(required = false) Boolean firstpage){
+//        Result<AssetVo> result = new Result<>(); 
+//        AssetVo assetVo = new AssetVo(); 
+//        
+//        if(code.toUpperCase().equals("USDC")) {
+//	        assetVo.setCode(code);
+//	        assetVo.setRatio("0.1");
+//	        assetVo.setLp_token("0");
+//	        assetVo.setRatio("0.001");
+//	        assetVo.setRisk_tpye(0);
+//	        assetVo.setSevendayProfit("0.0654");
+//	        assetVo.setTotalassets("15595374.064381951250954429334747535591555415");
+//	        assetVo.setUser_assets("0");
+//	        assetVo.setUser_assets_origin("0");
+//	        assetVo.setUser_profit("0");
+//        }
+//        
+//        if(code.toUpperCase().equals("WBTC")) {
+//	        assetVo.setCode(code);
+//	        assetVo.setRatio("0.1");
+//	        assetVo.setLp_token("0");
+//	        assetVo.setRatio("0.001");
+//	        assetVo.setRisk_tpye(0);
+//	        assetVo.setSevendayProfit("0.0071");
+//	        assetVo.setTotalassets("15.61390013391415938485668058316149142");
+//	        assetVo.setUser_assets("0");
+//	        assetVo.setUser_assets_origin("0");
+//	        assetVo.setUser_profit("0");
+//        }
+//        
+//        if(code.toUpperCase().equals("ETH")) {
+//	        assetVo.setCode(code);
+//	        assetVo.setRatio("0.1");
+//	        assetVo.setLp_token("0");
+//	        assetVo.setRatio("0.001");
+//	        assetVo.setRisk_tpye(0);
+//	        assetVo.setSevendayProfit("0.0497");
+//	        assetVo.setTotalassets("1999.09204979923497559962274899599794195");
+//	        assetVo.setUser_assets("0");
+//	        assetVo.setUser_assets_origin("0");
+//	        assetVo.setUser_profit("0");
+//        }
+//        
+//        result.setData(assetVo);
+//        return result;
+//    }
+//
+//    @PostMapping(value = "/profit")
+//    public Result<ProfitVo> getProfit(@RequestParam(required = false) String address){
+//        Result<ProfitVo> result = new Result<>();
+//
+//        List<ProfitVo> profitVos;
+//        String endTime = DateUtil.getThisDayBeginTime(LocalDate.now());
+//        Supply supply = supplyService.getSupplyByTime(endTime);
+//        List<Supply> supplies = supplyService.getCurrentThirdty();
+//
+//        profitVos = supplies.stream().sorted(Comparator.comparing(Supply::getDateTime))
+//                .map(v-> new ProfitVo(new BigDecimal(v.getDateTime()).divide(new BigDecimal("1000"), 0, RoundingMode.HALF_DOWN).stripTrailingZeros().toPlainString(), caculaApy(Instant.ofEpochMilli(Long.parseLong(v.getDateTime())).atZone(ZoneOffset.UTC).toLocalDate(), supply.getAverageDays()))).collect(Collectors.toList());
+//        result.setDataList(profitVos);
+//        return result;
+//    }
+//
+//
+//    @PostMapping(value = "/transaction")
+//    public Result<TransactionVo> transaction(@RequestParam(required = false) String address,@RequestParam(required = false) Long pageNo, @RequestParam(required = false) Long pageSize){			// pageNo, pageSize, orderBy , order
+//        log.info("[transaction] address:{} pageNo:{} pageSize:{}", address, pageNo, pageSize);
+//        Result<TransactionVo> result = new Result<>();
+//        tech.yeez.investment.model.dto.common.Page page = new tech.yeez.investment.model.dto.common.Page();
+//        pageNo = pageNo == null ? 1 : pageNo;
+//        pageSize = pageSize == null ? 10 : pageSize;
+//        if(StringUtils.isBlank(address)){
+//            result.setDataList(new ArrayList<>());
+//            page.setPageNo(pageNo);
+//            page.setPageSize(pageSize);
+//            page.setCount(0);
+//            result.setPage(page);
+//            return result;
+//        }
+//
+//        Page<TransactionRecord> iPage = new Page<>(pageNo, pageSize);
+//        Page<TransactionRecord> transactionRecordPage = transactionRecordService.findTranForPage(iPage, CommonUtil.removeHexPrefixIfExists(address));
+//
+//        List<TransactionVo> transactionVos = transactionRecordPage.getRecords().stream().map(TransactionVo::transfer).collect(Collectors.toList());
+//        result.setDataList(transactionVos);
+//
+//
+//        page.setPageNo(pageNo);
+//        page.setPageSize(pageSize);
+//        page.setCount(transactionRecordPage.getTotal());
+//        result.setPage(page);
+//
+//        return result;
+//    }
+//
+//
+//    /**
+//     *
+//     * cal  days  avarge apy
+//     * @param startDate startDate
+//     */
+//    private static String caculaApy(LocalDate startDate, Integer days){
+////        LocalDate endDate = startDate.minusDays(days);
+//        ISupplyService supplyService = SpringBeanUtil.getBean(ISupplyService.class);
+//        if(supplyService == null){
+//            log.error("[caculaApy] supplyService is null!");
+//            return "0";
+//        }
+////        List<Supply> supplyList = supplyService.getSupplyBetweenTime(DateUtil.getThisDayBeginTime(endDate), DateUtil.getThisDayBeginTime(startDate));
+//        List<Supply> supplyList = supplyService.getSupplyLastCount(DateUtil.getThisDayBeginTime(startDate), days);
+//        supplyList = supplyList.stream().filter(v->StringUtils.isNotBlank(v.getApy())).collect(Collectors.toList());
+//        if(supplyList.size() == 0){
+//            return "0";
+//        }
+//        days = days > supplyList.size() ? supplyList.size() : days;
+//        BigDecimal totalApy = supplyList.stream().map(Supply::getApy).map(BigDecimal::new).reduce(BigDecimal::add).orElse(BigDecimal.ZERO);
+//        return totalApy.divide(new BigDecimal(days), 18, RoundingMode.HALF_DOWN).multiply(new BigDecimal("365")).setScale(4, RoundingMode.HALF_DOWN).stripTrailingZeros().toPlainString();
+//
+//    }
 
 
     public static void main(String[] args) {
