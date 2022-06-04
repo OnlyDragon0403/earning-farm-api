@@ -67,9 +67,9 @@ public class ApplicationStartListener implements CommandLineRunner {
                     TradeTypeEnum.setDefaultValue(tradeTypeEnum, value);
                 } 
                 else {
-                    String fromBlock = subscribe.getFromBlock();
+//                    String fromBlock = subscribe.getFromBlock();
                     //subscribe value
-                    if (StringUtils.isNotBlank(subscribe.getFilterId())) {
+//                    if (StringUtils.isNotBlank(subscribe.getFilterId())) {
 //                        Result<String> result = subscriptionService.subscripeStatus(subscribe.getFilterId());
 //                        if (result.getResultCode() != ResultDesc.SUCCESS.getResultCode()) {
 //                            log.error("[ApplicationStartListener] subscripeStatus error filterId:{} status resultDesc:{}", subscribe.getFilterId(), result.getResultDesc());
