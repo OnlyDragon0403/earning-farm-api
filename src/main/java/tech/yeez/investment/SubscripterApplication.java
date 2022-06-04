@@ -1,13 +1,13 @@
-package com.example.herokuserverdemo;
+package tech.yeez.investment;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class HerokuServerDemoApplication {
+public class SubscripterApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(HerokuServerDemoApplication.class, args);
+		SpringApplication.run(SubscripterApplication.class, args);
 	}
 
 }
