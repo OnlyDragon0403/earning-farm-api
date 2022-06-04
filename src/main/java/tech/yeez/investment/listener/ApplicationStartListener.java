@@ -70,7 +70,7 @@ public class ApplicationStartListener implements CommandLineRunner {
                     String fromBlock = subscribe.getFromBlock();
                     //subscribe value
                     if (StringUtils.isNotBlank(subscribe.getFilterId())) {
-                        Result<String> result = subscriptionService.subscripeStatus(subscribe.getFilterId());
+//                        Result<String> result = subscriptionService.subscripeStatus(subscribe.getFilterId());
 //                        if (result.getResultCode() != ResultDesc.SUCCESS.getResultCode()) {
 //                            log.error("[ApplicationStartListener] subscripeStatus error filterId:{} status resultDesc:{}", subscribe.getFilterId(), result.getResultDesc());
 //                            continue;  
