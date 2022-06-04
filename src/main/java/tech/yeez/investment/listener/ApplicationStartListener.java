@@ -56,16 +56,17 @@ public class ApplicationStartListener implements CommandLineRunner {
                     log.error("[CommandLineRunner]tradeTypeEnum is null subId:{}", subscribe.getId());
                     continue;
                 }
-//                if (tradeTypeEnum.getLocal()) {
-//                    //local save value
-//                    String value = AssetConstant.ethCall(subscriptionService, AssetConstant.net_work, subscribe.getContractAddress(), subscribe.getTopics());
-//                    log.info("ethcall return subscribe:{}, value:{}", subscribe.getTradeType(), value);
-//                    if (StringUtils.isBlank(value)) {
-//                        log.error("[CommandLineRunner]tradeTypeEnum value is null subId:{}", subscribe.getId());
-//                        continue;
-//                    }
-//                    TradeTypeEnum.setDefaultValue(tradeTypeEnum, value);
-//                } else {
+                if (tradeTypeEnum.getLocal()) {
+                    //local save value
+                    String value = AssetConstant.ethCall(subscriptionService, AssetConstant.net_work, subscribe.getContractAddress(), subscribe.getTopics());
+                    log.info("ethcall return subscribe:{}, value:{}", subscribe.getTradeType(), value);
+                    if (StringUtils.isBlank(value)) {
+                        log.error("[CommandLineRunner]tradeTypeEnum value is null subId:{}", subscribe.getId());
+                        continue;
+                    }
+                    TradeTypeEnum.setDefaultValue(tradeTypeEnum, value);
+                } 
+//                else {
 //                    String fromBlock = subscribe.getFromBlock();
 //                    //subscribe value
 //                    if (StringUtils.isNotBlank(subscribe.getFilterId())) {
