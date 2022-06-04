@@ -49,26 +49,26 @@ public class ApplicationStartListener implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         try {
-            List<Subscribe> subscribeList = subscribeService.selectAll();
-            for (Subscribe subscribe : subscribeList) {
-                TradeTypeEnum tradeTypeEnum = TradeTypeEnum.queryByType(subscribe.getTradeType());
-                if (tradeTypeEnum == null) { 
-                    log.error("[CommandLineRunner]tradeTypeEnum is null subId:{}", subscribe.getId());
-                    continue;
-                }
-                if (tradeTypeEnum.getLocal()) {
-                    //local save value
-                    String value = AssetConstant.ethCall(subscriptionService, AssetConstant.net_work, subscribe.getContractAddress(), subscribe.getTopics());
-                    log.info("ethcall return subscribe:{}, value:{}", subscribe.getTradeType(), value);
-                    if (StringUtils.isBlank(value)) {
-                        log.error("[CommandLineRunner]tradeTypeEnum value is null subId:{}", subscribe.getId());
-                        continue;
-                    }
-                    TradeTypeEnum.setDefaultValue(tradeTypeEnum, value);
-                } 
-                else {
+//            List<Subscribe> subscribeList = subscribeService.selectAll();
+//            for (Subscribe subscribe : subscribeList) {
+//                TradeTypeEnum tradeTypeEnum = TradeTypeEnum.queryByType(subscribe.getTradeType());
+//                if (tradeTypeEnum == null) { 
+//                    log.error("[CommandLineRunner]tradeTypeEnum is null subId:{}", subscribe.getId());
+//                    continue;
+//                }
+//                if (tradeTypeEnum.getLocal()) {
+//                    //local save value
+//                    String value = AssetConstant.ethCall(subscriptionService, AssetConstant.net_work, subscribe.getContractAddress(), subscribe.getTopics());
+//                    log.info("ethcall return subscribe:{}, value:{}", subscribe.getTradeType(), value);
+//                    if (StringUtils.isBlank(value)) {
+//                        log.error("[CommandLineRunner]tradeTypeEnum value is null subId:{}", subscribe.getId());
+//                        continue;
+//                    }
+//                    TradeTypeEnum.setDefaultValue(tradeTypeEnum, value);
+//                } 
+//                else {
 //                    String fromBlock = subscribe.getFromBlock();
-                    //subscribe value
+//                    //subscribe value
 //                    if (StringUtils.isNotBlank(subscribe.getFilterId())) {
 //                        Result<String> result = subscriptionService.subscripeStatus(subscribe.getFilterId());
 //                        if (result.getResultCode() != ResultDesc.SUCCESS.getResultCode()) {
@@ -79,8 +79,8 @@ public class ApplicationStartListener implements CommandLineRunner {
 //                            log.info("[CommandLineRunner] subId:{} status is ok!", subscribe.getId());
 //                            continue;
 //                        }
-                    }
-
+//                    }
+//
 //                    SubscribeRequestDto subscribeRequestDto = new SubscribeRequestDto();
 //                    subscribeRequestDto.setAddress(subscribe.getContractAddress());
 //                    subscribeRequestDto.setFromBlock(fromBlock);
@@ -97,9 +97,9 @@ public class ApplicationStartListener implements CommandLineRunner {
 //                        subscribe.setFilterId(result.getData());
 //                    }
 //                    subscribeService.updateById(subscribe);
-
-                }
-            }
+//
+//                }
+//            }
             //init supply
 //            String timestamp = DateUtil.getThisDayBeginTime(LocalDate.now());
 //            Supply supply = supplyService.getSupplyByTime(timestamp);
