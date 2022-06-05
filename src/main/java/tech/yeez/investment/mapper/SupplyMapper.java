@@ -28,7 +28,10 @@ public interface SupplyMapper extends BaseMapper<Supply> {
 
     @Select("select * from supply order by date_time desc limit 31")
     List<Supply> getCurrentThirdty();
-
+    
+    @Select("select * from supply where crv = #{code} order by date_time desc limit 31")
+    List<Supply> getCurrentThirdtyByCode(String code);
+    
     @Select("select * from supply order by date_time desc limit 1")
     Supply getLastSupplly();
 

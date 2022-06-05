@@ -106,17 +106,15 @@ public class AssetController {
         return result;
     }
 
-    @PostMapping(value = "/profit")
-    public Result<ProfitVo> getProfit(@RequestParam(required = false) String address){
+    @PostMapping(path= {"/{code}/profit", "/profit"})
+    public Result<ProfitVo> getProfit(@PathVariable(required=false,name="code") String code ,@RequestParam(required = false) String address){
         Result<ProfitVo> result = new Result<>();
 
         List<ProfitVo> profitVos;
         String endTime = DateUtil.getThisDayBeginTime(LocalDate.now());
         Supply supply = supplyService.getSupplyByTime(endTime);
-        List<Supply> supplies = supplyService.getCurrentThirdty();
-        	
-        String calc = caculaApy(Instant.ofEpochMilli(Long.parseLong(supplies.get(0).getDateTime())).atZone(ZoneOffset.UTC).toLocalDate(), supply.getAverageDays());
-        
+        List<Supply> supplies = supplyService.getCurrentThirdtyByCode(code);
+       
         profitVos = supplies.stream().sorted(Comparator.comparing(Supply::getDateTime))
                 .map(v-> new ProfitVo(new BigDecimal(v.getDateTime()).divide(new BigDecimal("1000"), 0, RoundingMode.HALF_DOWN).stripTrailingZeros().toPlainString(), caculaApy(Instant.ofEpochMilli(Long.parseLong(v.getDateTime())).atZone(ZoneOffset.UTC).toLocalDate(), supply.getAverageDays()))).collect(Collectors.toList());
         result.setDataList(profitVos);

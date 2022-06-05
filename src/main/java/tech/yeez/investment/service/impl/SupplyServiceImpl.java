@@ -43,7 +43,12 @@ public class SupplyServiceImpl extends ServiceImpl<SupplyMapper, Supply> impleme
     public List<Supply> getCurrentThirdty() {
         return supplyMapper.getCurrentThirdty();
     }
-
+    // add Item
+    @Override 
+    public List<Supply> getCurrentThirdtyByCode(String code) {
+    	return supplyMapper.getCurrentThirdtyByCode(code);
+    }
+    
     @Override
     public Supply getLastSupplly() {
         return supplyMapper.getLastSupplly();

@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Select;
+
 /**
  * <p>
  *
@@ -23,6 +25,8 @@ public interface ISupplyService extends IService<Supply> {
     Double selectAvgApy(String startTime, String endTime);
 
     List<Supply> getCurrentThirdty();
+    
+    List<Supply> getCurrentThirdtyByCode(String code);
 
     /**
      *

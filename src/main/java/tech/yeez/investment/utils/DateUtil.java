@@ -31,7 +31,7 @@ public class DateUtil {
 
     public static String getThisDayBeginTime(LocalDate localDate) {
        LocalDateTime localDateTime = LocalDateTime.of(localDate, LocalTime.MIN);
-        long localDateStr = localDateTime.toInstant(ZoneOffset.UTC).toEpochMilli();
+        long localDateStr = localDateTime.toInstant(ZoneOffset.UTC).toEpochMilli();  
         return String.valueOf(localDateStr);
     }
 
