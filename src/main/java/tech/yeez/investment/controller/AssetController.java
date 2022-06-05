@@ -122,8 +122,8 @@ public class AssetController {
     }
 
 
-    @PostMapping(value = "/transaction")
-    public Result<TransactionVo> transaction(@RequestParam(required = false) String address,@RequestParam(required = false) Long pageNo, @RequestParam(required = false) Long pageSize){			// pageNo, pageSize, orderBy , order
+    @PostMapping(path= {"/{code}/transaction", "/transaction"})
+    public Result<TransactionVo> transaction(@PathVariable(required=false,name="code") String code ,@RequestParam(required = false) String address,@RequestParam(required = false) Long pageNo, @RequestParam(required = false) Long pageSize){			// pageNo, pageSize, orderBy , order
         log.info("[transaction] address:{} pageNo:{} pageSize:{}", address, pageNo, pageSize);
         Result<TransactionVo> result = new Result<>();
         tech.yeez.investment.model.dto.common.Page page = new tech.yeez.investment.model.dto.common.Page();
