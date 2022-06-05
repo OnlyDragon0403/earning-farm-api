@@ -116,7 +116,7 @@ public class AssetController {
         List<Supply> supplies = supplyService.getCurrentThirdtyByCode(code);
        
         profitVos = supplies.stream().sorted(Comparator.comparing(Supply::getDateTime))
-                .map(v-> new ProfitVo(new BigDecimal(v.getDateTime()).divide(new BigDecimal("1000"), 0, RoundingMode.HALF_DOWN).stripTrailingZeros().toPlainString(), caculaApy(Instant.ofEpochMilli(Long.parseLong(v.getDateTime())).atZone(ZoneOffset.UTC).toLocalDate(), supply.getAverageDays()))).collect(Collectors.toList());
+                .map(v-> new ProfitVo(v.getDateTime(),v.getApy())).collect(Collectors.toList());
         result.setDataList(profitVos);
         return result;
     }
